@@ -1,6 +1,7 @@
 // lehi bel routes
 const express = require("express");
 const dotenv = require("dotenv");
+const cors = require("cors");
 // bech yconnectili 3al database (nosql)
 const mongoose = require("mongoose");
 
@@ -12,6 +13,11 @@ const app = express();
 dotenv.config();
 // miiddleware
 app.use(express.json());
+app.use(
+  cors({
+    origin: "http://localhost:3000",
+  })
+);
 
 mongoose
   .connect(process.env.DATABASECLOUD)

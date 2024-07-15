@@ -14,6 +14,22 @@ router.get("/", async (req, res) => {
     res.status(404).json({ message: error.message });
   }
 });
+router.get("/pagination", async (req, res) => {
+  const page = parseInt(req.query.page);
+  const pageSize = parseInt(req.query.pageSize);
+
+  const startIndex = (page - 1) * pageSize;
+  const endIndex = page * pageSize;
+
+  const articles = await Article.find({}, null, { sort: { _id: -1 } }).populate(
+    "scategorieID"
+  );
+  const paginatedProducts = articles.slice(startIndex, endIndex);
+
+  const totalPages = Math.ceil(articles.length / pageSize);
+
+  res.json({ products: paginatedProducts, totalPages });
+});
 router.get("/:articleId", async (req, res) => {
   const articleId = req.params.articleId;
   try {

@@ -13,11 +13,12 @@ const app = express();
 dotenv.config();
 // miiddleware
 app.use(express.json());
-app.use(
-  cors({
-    origin: "http://localhost:3000",
-  })
-);
+// app.use(
+//   cors({
+//     origin: "http://localhost:3000",
+//   })
+// );
+app.use(cors());
 
 mongoose
   .connect(process.env.DATABASECLOUD)

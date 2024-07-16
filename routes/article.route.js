@@ -15,15 +15,20 @@ router.get("/", async (req, res) => {
   }
 });
 router.get("/pagination", async (req, res) => {
+  const filter = req.query.filter || "";
+
   const page = parseInt(req.query.page);
   const pageSize = parseInt(req.query.pageSize);
 
   const startIndex = (page - 1) * pageSize;
   const endIndex = page * pageSize;
 
-  const articles = await Article.find({}, null, { sort: { _id: -1 } }).populate(
-    "scategorieID"
-  );
+  const articles = await Article.find(
+    { designation: { $regex: filter, $options: "i" } },
+    null,
+    { sort: { _id: -1 } }
+  ).populate("scategorieID");
+
   const paginatedProducts = articles.slice(startIndex, endIndex);
 
   const totalPages = Math.ceil(articles.length / pageSize);

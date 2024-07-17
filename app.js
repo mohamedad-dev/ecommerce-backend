@@ -11,13 +11,8 @@ const articleRouter = require("./routes/article.route");
 
 const app = express();
 dotenv.config();
-// miiddleware
+// middleware
 app.use(express.json());
-// app.use(
-//   cors({
-//     origin: "http://localhost:3000",
-//   })
-// );
 app.use(cors());
 
 mongoose
